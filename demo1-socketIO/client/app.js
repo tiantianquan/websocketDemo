@@ -1,5 +1,11 @@
-var socket = io.connect('http://localhost:3001');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+var socket = io.connect(location.href)
+
+var txt = document.querySelector('.txt')
+
+socket.on('receiveText', function(data) {
+  txt.value = data.content
+})
+
+txt.addEventListener('input',function(e){
+  socket.emit('sendText',{content:txt.value})
+})
